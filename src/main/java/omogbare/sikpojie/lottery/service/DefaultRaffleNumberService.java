@@ -1,7 +1,7 @@
 package omogbare.sikpojie.lottery.service;
 
 import omogbare.sikpojie.lottery.entity.RaffleNumberEntity;
-import omogbare.sikpojie.lottery.repository.RaffleNumberEntityRepository;
+import omogbare.sikpojie.lottery.repository.RaffleNumberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 public class DefaultRaffleNumberService implements RaffleNumberService{
 
     @Autowired
-    RaffleNumberEntityRepository repo;
+    RaffleNumberRepository raffleNumberRepo;
 
     @Override
     public void saveRaffleNumber(RaffleNumberEntity raffleNumber) {
-        repo.save(raffleNumber);
+        raffleNumberRepo.save(raffleNumber);
     }
 }

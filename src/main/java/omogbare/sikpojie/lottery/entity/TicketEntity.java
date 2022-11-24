@@ -6,22 +6,22 @@ import lombok.Setter;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.Instant;
-import java.util.List;
 import java.util.Optional;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "ticket")
-public class TicketEntity {
+public class TicketEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Basic
-    private Boolean drawn;
+    private Boolean checked;
 
     private Instant created;
 
@@ -32,7 +32,7 @@ public class TicketEntity {
     void preInsert(){
         created = Optional.ofNullable(created).orElseGet(Instant::now);
         modified = Optional.ofNullable(modified).orElseGet(Instant::now);
-        drawn = Optional.ofNullable(drawn).orElse(false);
+        checked = Optional.ofNullable(checked).orElse(false);
     }
 
     @PreUpdate

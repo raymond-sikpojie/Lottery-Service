@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RaffleNumberEntityRepository extends JpaRepository<RaffleNumberEntity, Long> {
+public interface RaffleNumberRepository extends JpaRepository<RaffleNumberEntity, Long> {
 }
