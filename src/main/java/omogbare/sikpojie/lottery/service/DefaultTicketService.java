@@ -1,8 +1,10 @@
 package omogbare.sikpojie.lottery.service;
 
+import net.bytebuddy.implementation.bytecode.Throw;
 import omogbare.sikpojie.lottery.converter.TicketEntityToTicketObjectConverter;
 import omogbare.sikpojie.lottery.domain.raffle.RaffleNumbers;
 import omogbare.sikpojie.lottery.domain.raffle.RaffleNumbersGenerator;
+import omogbare.sikpojie.lottery.domain.tickets.ClosedTicket;
 import omogbare.sikpojie.lottery.domain.tickets.OpenTicket;
 import omogbare.sikpojie.lottery.domain.tickets.Ticket;
 import omogbare.sikpojie.lottery.entity.RaffleNumberEntity;
@@ -12,6 +14,10 @@ import omogbare.sikpojie.lottery.lottery.OutcomeGenerator;
 import omogbare.sikpojie.lottery.repository.RaffleNumberRepository;
 import omogbare.sikpojie.lottery.repository.TicketRepository;
 import omogbare.sikpojie.lottery.request.TicketRequest;
+import omogbare.sikpojie.lottery.response.TicketResponse;
+import omogbare.sikpojie.lottery.value.CreatedAt;
+import omogbare.sikpojie.lottery.value.Id;
+import omogbare.sikpojie.lottery.value.ModifiedAt;
 import omogbare.sikpojie.lottery.value.Outcome;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -103,13 +109,9 @@ public class DefaultTicketService implements TicketService {
     @Override
     public Ticket ammendLines(Long id, TicketRequest ticketRequest) throws FailedConversion {
         TicketEntity ticketEntity = ticketRepository.findById(id).get();
-
-//        Optional<TicketEntity> ticketEntity = ticketRepository.findById(id);
-        if (ticketEntity == null) {
-            throw new IllegalArgumentException("Ticket not found");
+        if(ticketEntityToTicketObjectConverter.convert(ticketEntity) instanceof ClosedTicket) {
+             throw new FailedConversion("Unable to edit. Ticket is closed");
         }
-
-//        TicketEntity entity = ticketEntity.orElseThrow(IllegalArgumentException::new);
 
         int numberOfRaffleToCreate = ticketRequest.getNumberOfLines();
 
@@ -138,27 +140,52 @@ public class DefaultTicketService implements TicketService {
 
 //    @Override
 //    public Ticket ammendLines(OpenTicket ticket, TicketRequest request) {
-//        TicketEntity ticketEntity = new TicketEntity();
-//        ticketEntity.setId(ticket.getId().getValue());
+//        if(ticket instanceof OpenTicket) {
 //
-//        int numberOfRaffleToCreate = request.getNumberOfLines();
-//        List<RaffleNumbers> raffleNumbers =  Stream
-//                .generate(()-> raffleNumbersGenerator.create())
-//                .limit(numberOfRaffleToCreate)
-//                .collect(Collectors.toList());
+//            TicketEntity ticketEntity = new TicketEntity();
+//            ticketEntity.setId(ticket.getId().getValue());
 //
-//        List<RaffleNumberEntity> raffleNumberEntities = raffleNumbers.stream()
-//                .map(raffleNumber -> new RaffleNumberEntity(ticketEntity, raffleNumber.getNumbers())).collect(Collectors.toList());
+//            int numberOfRaffleToCreate = request.getNumberOfLines();
+//            List<RaffleNumbers> raffleNumbers = Stream
+//                    .generate(() -> raffleNumbersGenerator.create())
+//                    .limit(numberOfRaffleToCreate)
+//                    .collect(Collectors.toList());
 //
-//        raffleNumberRepository.saveAll(raffleNumberEntities);
-//        List<Outcome> outcomes = raffleNumbers.stream()
-//                .map(num -> outcomeGenerator.create(num))
-//                .collect(Collectors.toList());
+//            List<RaffleNumberEntity> raffleNumberEntities = raffleNumbers.stream()
+//                    .map(raffleNumber -> new RaffleNumberEntity(ticketEntity, raffleNumber.getNumbers())).collect(Collectors.toList());
 //
-//        ticket.getLines().addAll(outcomes);
+//            raffleNumberRepository.saveAll(raffleNumberEntities);
+//            List<Outcome> outcomes = raffleNumbers.stream()
+//                    .map(num -> outcomeGenerator.create(num))
+//                    .collect(Collectors.toList());
+//
+//            ticket.getLines().addAll(outcomes);
+//            return ticket;
+//
+//        } else {
+//            throw  new RuntimeException("Ticket is already closed");
+//
+//        }
+//
+//    }
 
     @Override
-    public String editTicketStatus() {
-        return null;
+    public String retrieveTicketStatus(Long id) {
+//        TicketEntity ticketEntity = ticketRepository.findById(id).get();
+        Optional<TicketEntity> ticketEntity = ticketRepository.findById(id);
+
+        TicketEntity entity = ticketEntity.orElseThrow(IllegalArgumentException::new);
+
+        if(entity.getChecked() == false) {
+            Boolean initialCheckedValue = entity.getChecked();
+            entity.setChecked(true);
+            ticketRepository.save(entity);
+            Ticket closedTicket = ticketEntityToTicketObjectConverter.convert(entity);
+            System.out.println(closedTicket instanceof ClosedTicket);
+            return "This ticket is now closed, with an initial checked value of " + initialCheckedValue;
+
+        } else {
+            return "This ticked is closed, with a checked value of : " + entity.getChecked();
+        }
     }
 }

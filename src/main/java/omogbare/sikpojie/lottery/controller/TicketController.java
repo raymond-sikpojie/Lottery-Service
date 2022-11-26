@@ -30,7 +30,7 @@ public class TicketController {
     TicketEntityToTicketObjectConverter ticketEntityToTicketObjectConverter;
 
 
-    @PostMapping
+    @PostMapping("/ticket")
     public TicketResponse createTicket(@Valid @RequestBody TicketRequest ticketRequest) throws FailedConversion {
         Ticket ticket = ticketService.save(ticketRequest);
         TicketResponse ticketResponse = new TicketResponse(
@@ -43,7 +43,7 @@ public class TicketController {
 
     }
 
-    @GetMapping
+    @GetMapping("/ticket")
     public List<TicketResponse> getAllTickets() {
         List<Ticket> tickets = ticketService.getAllTickets();
         return tickets.stream().map(ticket -> new TicketResponse(
@@ -54,7 +54,7 @@ public class TicketController {
         )).collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/ticket/{id}")
     public TicketResponse getTicketById(@PathVariable Long id) {
         Ticket ticket = ticketService.getTicketById(id);
         TicketResponse ticketResponse = new TicketResponse(
@@ -69,9 +69,10 @@ public class TicketController {
     /**
      * Pull the entity from db, throw it into the class converter
      */
-    @PutMapping("/{id}")
+    @PutMapping("/ticket/{id}")
     public TicketResponse ammendLines(@PathVariable Long id,
                                            @RequestBody TicketRequest ticketRequest) throws FailedConversion {
+
 
         Ticket ticket = ticketService.ammendLines(id, ticketRequest);
         TicketResponse ticketResponse = new TicketResponse(
@@ -100,5 +101,12 @@ public class TicketController {
 //                ticket.getLines()
 //        );
     }
+
+    @PutMapping("/status/{id}")
+    public String retrieveTicketStatus(@PathVariable Long id) {
+
+        return ticketService.retrieveTicketStatus(id);
+    };
+
 
 }
