@@ -1,4 +1,4 @@
-package omogbare.sikpojie.lottery.handlers;
+package omogbare.sikpojie.lottery.ErrorHandlers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

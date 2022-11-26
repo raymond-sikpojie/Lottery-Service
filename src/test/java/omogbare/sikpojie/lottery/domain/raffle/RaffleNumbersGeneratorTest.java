@@ -1,6 +1,5 @@
 package omogbare.sikpojie.lottery.domain.raffle;
 
-import omogbare.sikpojie.lottery.domain.raffle.helpers.RaffleFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,15 +8,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 
-class RaffleFactoryTest {
+class RaffleNumbersGeneratorTest {
 
 //    NumberGenerator generatorMock ;
 
-    RaffleFactory factory = new RaffleFactory();
+    RaffleNumbersGenerator raffleNumberGenerator = new RaffleNumbersGenerator();
 
     @BeforeEach
     void init() {
-        factory = new RaffleFactory();
+        raffleNumberGenerator = new RaffleNumbersGenerator();
 //        generatorMock = mock(NumberGenerator.class);
 
     }
@@ -37,7 +36,7 @@ class RaffleFactoryTest {
     @DisplayName("Raffle Facotry generates three numbers")
     @Test
     public void testFactoryCreatesThreeNumbers() {
-        RaffleNumbers raffleNumbers = factory.create();
+        RaffleNumbers raffleNumbers = raffleNumberGenerator.create();
         assertEquals(3, raffleNumbers.getNumbers().size());
     }
 

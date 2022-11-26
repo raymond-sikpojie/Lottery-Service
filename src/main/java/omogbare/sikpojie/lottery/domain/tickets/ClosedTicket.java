@@ -1,9 +1,7 @@
 package omogbare.sikpojie.lottery.domain.tickets;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.google.common.collect.ImmutableList;
+import lombok.*;
 import omogbare.sikpojie.lottery.value.CreatedAt;
 import omogbare.sikpojie.lottery.value.Id;
 import omogbare.sikpojie.lottery.value.ModifiedAt;
@@ -11,13 +9,15 @@ import omogbare.sikpojie.lottery.value.Outcome;
 
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+/**
+ * It's not mutable because @Value annotation does not have getters and setters
+ */
+
+@Value
 @EqualsAndHashCode(callSuper = true)
 public class ClosedTicket extends Ticket {
     Id id;
     CreatedAt createdAt;
     ModifiedAt modifiedAt;
-    List<Outcome> lines;
+    ImmutableList<Outcome> lines;
 }

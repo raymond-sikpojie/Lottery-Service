@@ -1,12 +1,10 @@
-package omogbare.sikpojie.lottery.handlers;
+package omogbare.sikpojie.lottery.ErrorHandlers;
 
 
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
+import omogbare.sikpojie.lottery.exceptions.FailedConversion;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,10 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @ControllerAdvice
@@ -45,6 +40,13 @@ public class TicketControllerRestResponseEntityExceptionHandler extends Response
 
         return handleExceptionInternal(ex, new ValidationError(HttpStatus.BAD_REQUEST,messages), headers, HttpStatus.BAD_REQUEST, request);
 
+    }
+
+    @ExceptionHandler(FailedConversion.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorMessage genericExceptionHandler(Exception exception) {
+        return new ErrorMessage(exception.getMessage());
     }
 
 }

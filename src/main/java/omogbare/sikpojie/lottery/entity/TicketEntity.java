@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 @Entity
@@ -20,8 +21,14 @@ public class TicketEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Basic
+//    @Basic
     private Boolean checked;
+
+    @OneToMany(
+            mappedBy = "ticketEntity",
+            fetch = FetchType.EAGER
+    )
+    private List<RaffleNumberEntity> raffleEntities;
 
     private Instant created;
 

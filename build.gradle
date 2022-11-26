@@ -16,26 +16,36 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
+
 	// a dependency on Jackson Databind
 	implementation('com.fasterxml.jackson.core:jackson-databind:2.14.0')
 	// and a dependency on vert.x
 	implementation('io.vertx:vertx-core:4.3.5')
 	implementation("org.springframework.boot:spring-boot-starter-validation:2.7.5")
 
+	implementation('com.google.guava:guava:31.1-jre')
+
+
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
 	compileOnly 'org.projectlombok:lombok:1.18.24'
 
+
+
+
+
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
 	testCompileOnly 'org.projectlombok:lombok:1.18.24'
+	testCompileOnly 'org.junit.jupiter:junit-jupiter-params:5.9.0'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 
 
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation("org.mockito:mockito-core:2.1.0")
+	testImplementation('org.mockito:mockito-core:4.8.0')
 }
 
 tasks.named('test') {

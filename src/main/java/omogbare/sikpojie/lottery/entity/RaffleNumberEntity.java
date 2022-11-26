@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -16,6 +17,7 @@ import java.util.Optional;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name="raffle_number")
 public class RaffleNumberEntity  {
 
@@ -31,6 +33,11 @@ public class RaffleNumberEntity  {
     private List<Integer> numbers;
     private Instant created;
     private Instant modified;
+
+    public RaffleNumberEntity(TicketEntity ticketEntity, List<Integer> numbers) {
+        this.ticketEntity = ticketEntity;
+        this.numbers = numbers;
+    }
 
     @PrePersist
     void preInsert(){
