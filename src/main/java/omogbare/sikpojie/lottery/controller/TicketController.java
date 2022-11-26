@@ -32,7 +32,7 @@ public class TicketController {
 
     @PostMapping("/ticket")
     public TicketResponse createTicket(@Valid @RequestBody TicketRequest ticketRequest) throws FailedConversion {
-        Ticket ticket = ticketService.save(ticketRequest);
+        Ticket ticket = ticketService.createTicket(ticketRequest);
         TicketResponse ticketResponse = new TicketResponse(
                 ticket.getId().getValue(),
                 ticket.getCreatedAt().getValue(),
@@ -74,32 +74,34 @@ public class TicketController {
                                            @RequestBody TicketRequest ticketRequest) throws FailedConversion {
 
 
-        Ticket ticket = ticketService.ammendLines(id, ticketRequest);
-        TicketResponse ticketResponse = new TicketResponse(
-                ticket.getId().getValue(),
-                ticket.getCreatedAt().getValue(),
-                ticket.getModifiedAt().getValue(),
-                ticket.getLines()
-        );
-        return ticketResponse;
-//        Optional<TicketEntity> ticketEntity = ticketRepository.findById(id);
-//
-//        TicketEntity entity = ticketEntity.orElseThrow(IllegalArgumentException::new);
-//
-//        Ticket ticket = ticketEntityToTicketObjectConverter.convert(entity);
-//
-//
-//        if( ticket instanceof OpenTicket){
-//            ticketService.ammendLines((OpenTicket) ticket, ticketRequest);
-//
-//        }
-//
-//        return new TicketResponse(
+//        Ticket ticket = ticketService.ammendLines(id, ticketRequest);
+//        TicketResponse ticketResponse = new TicketResponse(
 //                ticket.getId().getValue(),
 //                ticket.getCreatedAt().getValue(),
 //                ticket.getModifiedAt().getValue(),
 //                ticket.getLines()
 //        );
+//        return ticketResponse;
+
+
+        Optional<TicketEntity> ticketEntity = ticketRepository.findById(id);
+
+        TicketEntity entity = ticketEntity.orElseThrow(IllegalArgumentException::new);
+
+        Ticket ticket = ticketEntityToTicketObjectConverter.convert(entity);
+
+
+        if( ticket instanceof OpenTicket){
+            ticketService.ammendLines((OpenTicket) ticket, ticketRequest);
+
+        }
+
+        return new TicketResponse(
+                ticket.getId().getValue(),
+                ticket.getCreatedAt().getValue(),
+                ticket.getModifiedAt().getValue(),
+                ticket.getLines()
+        );
     }
 
     @PutMapping("/status/{id}")

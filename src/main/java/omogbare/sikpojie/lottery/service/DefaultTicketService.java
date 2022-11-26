@@ -52,35 +52,26 @@ public class DefaultTicketService implements TicketService {
     }
 
     @Override
-    public OpenTicket save(TicketRequest ticketRequest) throws FailedConversion {
+    public OpenTicket createTicket(TicketRequest ticketRequest) throws FailedConversion {
 
         //create ticket entity obj and save
         TicketEntity ticketEntity = new TicketEntity();
         ticketRepository.save(ticketEntity);
 //        TicketEntity ticketEntity = ticketRepository.save(new TicketEntity());
 
-        //create raffle numbers as a list by calling the
-        // raffleNumbersGenerator.create() method n number of times.
+        //create raffle numbers as a list by calling the raffleNumbersGenerator.create() method n number of times.
         int numberOfRaffleToCreate = ticketRequest.getNumberOfLines();
 
         List<RaffleNumbers> raffleNumbers = Stream
                 .generate(() -> raffleNumbersGenerator.create())
                 .limit(numberOfRaffleToCreate)
                 .collect(Collectors.toList());
-//        List<RaffleNumbers> raffleNumbers = new ArrayList<>();
-//
-//        for(int i=0; i<numberOfRaffleToCreate; i++) {
-//            raffleNumbers.add(raffleNumbersGenerator.create());
-//        }
-
 
         List<RaffleNumberEntity> entities = raffleNumbers.stream()
                 .map(raffleNumber -> new RaffleNumberEntity(ticketEntity, raffleNumber.getNumbers())
                 ).collect(Collectors.toList());
 
-        // save all to db with one db call and return the lines outcome
         raffleNumberRepository.saveAll(entities);
-
 
         // set entities
         ticketEntity.setRaffleEntities(entities);
@@ -106,67 +97,68 @@ public class DefaultTicketService implements TicketService {
     }
 
 
-    @Override
-    public Ticket ammendLines(Long id, TicketRequest ticketRequest) throws FailedConversion {
-        TicketEntity ticketEntity = ticketRepository.findById(id).get();
-        if(ticketEntityToTicketObjectConverter.convert(ticketEntity) instanceof ClosedTicket) {
-             throw new FailedConversion("Unable to edit. Ticket is closed");
-        }
-
-        int numberOfRaffleToCreate = ticketRequest.getNumberOfLines();
-
-        List<RaffleNumbers> raffleNumbers = Stream
-                .generate(() -> raffleNumbersGenerator.create())
-                .limit(numberOfRaffleToCreate)
-                .collect(Collectors.toList());
-
-        List<RaffleNumberEntity> raffleNumberEntities = raffleNumbers.stream()
-                .map(raffleNumber -> new RaffleNumberEntity(ticketEntity, raffleNumber.getNumbers()))
-                .collect(Collectors.toList());
-
-        raffleNumberRepository.saveAll(raffleNumberEntities);
-
-        ticketEntity.setRaffleEntities(raffleNumberEntities);
-
-        Ticket ticket = ticketEntityToTicketObjectConverter.convert(ticketEntity);
-//        List<Outcome> outcomes = raffleNumbers.stream()
-//                .map(num -> outcomeGenerator.create(num))
+//    @Override
+//    public Ticket ammendLines(Long id, TicketRequest ticketRequest) throws FailedConversion {
+//        TicketEntity ticketEntity = ticketRepository.findById(id).get();
+//        if(ticketEntityToTicketObjectConverter.convert(ticketEntity) instanceof ClosedTicket) {
+//             throw new FailedConversion("Unable to edit. Ticket is closed");
+//        }
+//
+//        int numberOfRaffleToCreate = ticketRequest.getNumberOfLines();
+//
+//        List<RaffleNumbers> raffleNumbers = Stream
+//                .generate(() -> raffleNumbersGenerator.create())
+//                .limit(numberOfRaffleToCreate)
 //                .collect(Collectors.toList());
 //
-//        ticket.getLines().addAll(outcomes);
-        return ticket;
+//        List<RaffleNumberEntity> raffleNumberEntities = raffleNumbers.stream()
+//                .map(raffleNumber -> new RaffleNumberEntity(ticketEntity, raffleNumber.getNumbers()))
+//                .collect(Collectors.toList());
+//
+//        raffleNumberRepository.saveAll(raffleNumberEntities);
+//
+//        ticketEntity.setRaffleEntities(raffleNumberEntities);
+//
+//        Ticket ticket = ticketEntityToTicketObjectConverter.convert(ticketEntity);
+////        List<Outcome> outcomes = raffleNumbers.stream()
+////                .map(num -> outcomeGenerator.create(num))
+////                .collect(Collectors.toList());
+////
+////        ticket.getLines().addAll(outcomes);
+//        return ticket;
+//
+//    }
 
-    }
-
-//    @Override
-//    public Ticket ammendLines(OpenTicket ticket, TicketRequest request) {
+    @Override
+    public Ticket ammendLines(OpenTicket ticket, TicketRequest request) {
 //        if(ticket instanceof OpenTicket) {
-//
-//            TicketEntity ticketEntity = new TicketEntity();
-//            ticketEntity.setId(ticket.getId().getValue());
-//
-//            int numberOfRaffleToCreate = request.getNumberOfLines();
-//            List<RaffleNumbers> raffleNumbers = Stream
-//                    .generate(() -> raffleNumbersGenerator.create())
-//                    .limit(numberOfRaffleToCreate)
-//                    .collect(Collectors.toList());
-//
-//            List<RaffleNumberEntity> raffleNumberEntities = raffleNumbers.stream()
-//                    .map(raffleNumber -> new RaffleNumberEntity(ticketEntity, raffleNumber.getNumbers())).collect(Collectors.toList());
-//
-//            raffleNumberRepository.saveAll(raffleNumberEntities);
-//            List<Outcome> outcomes = raffleNumbers.stream()
-//                    .map(num -> outcomeGenerator.create(num))
-//                    .collect(Collectors.toList());
-//
-//            ticket.getLines().addAll(outcomes);
-//            return ticket;
-//
-//        } else {
+
+            TicketEntity ticketEntity = new TicketEntity();
+            ticketEntity.setId(ticket.getId().getValue());
+
+            int numberOfRaffleToCreate = request.getNumberOfLines();
+            List<RaffleNumbers> raffleNumbers = Stream
+                    .generate(() -> raffleNumbersGenerator.create())
+                    .limit(numberOfRaffleToCreate)
+                    .collect(Collectors.toList());
+
+            List<RaffleNumberEntity> raffleNumberEntities = raffleNumbers.stream()
+                    .map(raffleNumber -> new RaffleNumberEntity(ticketEntity, raffleNumber.getNumbers())).collect(Collectors.toList());
+
+            raffleNumberRepository.saveAll(raffleNumberEntities);
+            List<Outcome> outcomes = raffleNumbers.stream()
+                    .map(num -> outcomeGenerator.create(num))
+                    .collect(Collectors.toList());
+
+            ticket.getLines().addAll(outcomes);
+            return ticket;
+
+        }
+//        else {
 //            throw  new RuntimeException("Ticket is already closed");
 //
 //        }
-//
+
 //    }
 
     @Override

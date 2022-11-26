@@ -10,14 +10,15 @@ import java.util.List;
 
 public interface TicketService {
 
-    OpenTicket save(TicketRequest ticketRequest) throws FailedConversion; // POST TICKET
+    OpenTicket createTicket(TicketRequest ticketRequest) throws FailedConversion; // POST TICKET
 
     List<Ticket> getAllTickets(); // GET ALL TICKETS
 
     Ticket getTicketById(Long id); // GET ONE TICKET
 
-    //    Ticket ammendLines(OpenTicket ticket, TicketRequest request);
-    Ticket ammendLines(Long id, TicketRequest ticketRequest) throws FailedConversion; // PUT - EDIT TICKET LINES
+    Ticket ammendLines(OpenTicket ticket, TicketRequest request);
+
+//    Ticket ammendLines(Long id, TicketRequest ticketRequest) throws FailedConversion; // PUT - EDIT TICKET LINES
 
     String retrieveTicketStatus(Long id); // PUT - RETRIEVE TICKET STATUS
 
