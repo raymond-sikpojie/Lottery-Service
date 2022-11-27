@@ -1,7 +1,7 @@
 # Lottery-Service
 
 ## Intro
-A a REST interface to a simple lottery system. The rules of the game are described below.
+A REST interface to a simple lottery system. The rules of the game are described below.
 
 ## Lottery Rules
 
