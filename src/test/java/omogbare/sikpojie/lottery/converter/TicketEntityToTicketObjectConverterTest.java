@@ -3,7 +3,6 @@ package omogbare.sikpojie.lottery.converter;
 import omogbare.sikpojie.lottery.domain.tickets.Ticket;
 import omogbare.sikpojie.lottery.entity.RaffleNumberEntity;
 import omogbare.sikpojie.lottery.entity.TicketEntity;
-import omogbare.sikpojie.lottery.helpers.EntityFactory;
 import omogbare.sikpojie.lottery.lottery.OutcomeGenerator;
 import org.junit.jupiter.api.Test;
 

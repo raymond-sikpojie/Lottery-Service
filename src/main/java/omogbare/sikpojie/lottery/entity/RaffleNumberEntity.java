@@ -52,10 +52,8 @@ public class RaffleNumberEntity  {
 
 }
 
-
-
 @Converter
-class RaffleNumbersConverter implements AttributeConverter<List,String>{
+class RaffleNumbersConverter implements AttributeConverter<List<Integer>,String>{
     ObjectMapper objectMapper = new ObjectMapper();
     @Override
     public String convertToDatabaseColumn(List attribute) {
@@ -69,7 +67,7 @@ class RaffleNumbersConverter implements AttributeConverter<List,String>{
     }
 
     @Override
-    public List convertToEntityAttribute(String dbData) {
+    public List<Integer> convertToEntityAttribute(String dbData) {
         List<Integer> raffleNumber = null;
 
         try {

@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class FailedConversion extends LogicalError{
+public class FailedConversion extends Exception {
     String message;
 }

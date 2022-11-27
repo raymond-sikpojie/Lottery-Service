@@ -1,10 +1,10 @@
 package omogbare.sikpojie.lottery.exceptions;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
+@Data
 @AllArgsConstructor
-@NoArgsConstructor
-public abstract class LogicalError extends Exception {
+public class InvalidTicketType extends LogicalError{
     String message;
 }

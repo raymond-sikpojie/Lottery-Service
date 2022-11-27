@@ -51,7 +51,7 @@ class DefaultTicketServiceTest {
         TicketRequest ticketRequest = new TicketRequest();
         ticketRequest.setNumberOfLines(1);
         when(ticketEntityConverterMock.convertToOpenTicket(any())).thenReturn(openTicket);
-        defaultTicketService.save(ticketRequest);
+        defaultTicketService.createTicket(ticketRequest);
     }
 
     @DisplayName("Test to know if TicketEntityToDomainTicketObjectConverter")
