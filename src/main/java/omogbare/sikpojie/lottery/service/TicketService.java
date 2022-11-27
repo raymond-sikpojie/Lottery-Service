@@ -18,7 +18,7 @@ public interface TicketService {
 
     Ticket ammendLines(OpenTicket ticket, TicketRequest request);
 
-//    Ticket ammendLines(Long id, TicketRequest ticketRequest) throws FailedConversion; // PUT - EDIT TICKET LINES
+//  Ticket ammendLines(Long id, TicketRequest ticketRequest) throws FailedConversion; // PUT - EDIT TICKET LINES
 
     String retrieveTicketStatus(Long id); // PUT - RETRIEVE TICKET STATUS
 

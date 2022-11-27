@@ -1,16 +1,12 @@
 package omogbare.sikpojie.lottery.entity;
 
-
 import lombok.Getter;
 import lombok.Setter;
-
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
-
 @Entity
 @Getter
 @Setter
@@ -23,8 +19,8 @@ public class TicketEntity implements Serializable {
     private Boolean checked;
 
     @OneToMany(
-            mappedBy = "ticketEntity"
-//            fetch = FetchType.EAGER
+            mappedBy = "ticketEntity",
+            fetch = FetchType.EAGER
     )
     private List<RaffleNumberEntity> raffleEntities;
 

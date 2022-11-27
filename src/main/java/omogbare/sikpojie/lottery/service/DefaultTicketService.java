@@ -1,6 +1,5 @@
 package omogbare.sikpojie.lottery.service;
 
-import net.bytebuddy.implementation.bytecode.Throw;
 import omogbare.sikpojie.lottery.converter.TicketEntityToTicketObjectConverter;
 import omogbare.sikpojie.lottery.domain.raffle.RaffleNumbers;
 import omogbare.sikpojie.lottery.domain.raffle.RaffleNumbersGenerator;
@@ -14,16 +13,9 @@ import omogbare.sikpojie.lottery.lottery.OutcomeGenerator;
 import omogbare.sikpojie.lottery.repository.RaffleNumberRepository;
 import omogbare.sikpojie.lottery.repository.TicketRepository;
 import omogbare.sikpojie.lottery.request.TicketRequest;
-import omogbare.sikpojie.lottery.response.TicketResponse;
-import omogbare.sikpojie.lottery.value.CreatedAt;
-import omogbare.sikpojie.lottery.value.Id;
-import omogbare.sikpojie.lottery.value.ModifiedAt;
 import omogbare.sikpojie.lottery.value.Outcome;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,9 +49,8 @@ public class DefaultTicketService implements TicketService {
         //create ticket entity obj and save
         TicketEntity ticketEntity = new TicketEntity();
         ticketRepository.save(ticketEntity);
-//        TicketEntity ticketEntity = ticketRepository.save(new TicketEntity());
 
-        //create raffle numbers as a list by calling the raffleNumbersGenerator.create() method n number of times.
+        // create raffle numbers as a list by calling the raffleNumbersGenerator.create() method n number of times.
         int numberOfRaffleToCreate = ticketRequest.getNumberOfLines();
 
         List<RaffleNumbers> raffleNumbers = Stream
@@ -92,7 +83,6 @@ public class DefaultTicketService implements TicketService {
 
     @Override
     public Ticket getTicketById(Long id) {
-//        TicketEntity ticketEntity = ticketRepository.findById(id).get();
         Optional<TicketEntity> ticketEntity = ticketRepository.findById(id);
 
         TicketEntity entity = ticketEntity.orElseThrow(IllegalArgumentException::new);
@@ -137,7 +127,6 @@ public class DefaultTicketService implements TicketService {
     @Override
     public Ticket ammendLines(OpenTicket ticket, TicketRequest request) {
 //        if(ticket instanceof OpenTicket) {
-
             TicketEntity ticketEntity = new TicketEntity();
             ticketEntity.setId(ticket.getId().getValue());
 
@@ -157,7 +146,6 @@ public class DefaultTicketService implements TicketService {
 
             ticket.getLines().addAll(outcomes);
             return ticket;
-
         }
 //        else {
 //            throw  new RuntimeException("Ticket is already closed");

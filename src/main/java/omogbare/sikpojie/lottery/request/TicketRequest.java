@@ -17,5 +17,5 @@ public class TicketRequest {
     @Min(value = 1)
     @Max(value = 10)
     @JsonProperty("number_of_lines")
-    private Integer numberOfLines;
+    private int numberOfLines;
 }

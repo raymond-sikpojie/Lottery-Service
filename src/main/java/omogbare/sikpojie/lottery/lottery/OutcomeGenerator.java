@@ -1,6 +1,5 @@
 package omogbare.sikpojie.lottery.lottery;
 
-
 import omogbare.sikpojie.lottery.domain.raffle.RaffleNumbers;
 import omogbare.sikpojie.lottery.value.Outcome;
 import org.springframework.stereotype.Component;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OutcomeGenerator {
-
 
     public Outcome create(RaffleNumbers raffleNumbers) {
         long distinctNumbers = raffleNumbers.getNumbers().stream().distinct().count();

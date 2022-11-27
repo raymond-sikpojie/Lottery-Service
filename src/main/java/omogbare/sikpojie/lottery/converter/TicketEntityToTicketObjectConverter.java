@@ -30,19 +30,16 @@ public class TicketEntityToTicketObjectConverter {
     }
 
     /**
-     *This takes in a ticket entity and determins what type of ticket it returns. An open or closed ticket.
+     *This takes in a ticket entity and determines what type of ticket it returns. An open or closed ticket.
      */
 
     public Ticket convert(TicketEntity ticketEntity){
         List<Outcome> outcomes = ticketEntity.getRaffleEntities().stream()
-                //.map(RaffleNumberEntity::getNumbers)
-               //.map(RaffleNumbers::new) //  create new raffle numbers
                 .map(raffleNumberEntity -> raffleNumberEntity.getNumbers())
                 .map(num -> new RaffleNumbers(num))
 
                 .map(raffleNumbers -> outcomeGenerator.create(raffleNumbers))
                 .collect(Collectors.toList());
-
 
         Id id = new Id(ticketEntity.getId());
         CreatedAt createdAt = new CreatedAt(ticketEntity.getCreated());
@@ -59,14 +56,8 @@ public class TicketEntityToTicketObjectConverter {
     public OpenTicket convertToOpenTicket(TicketEntity ticketEntity) throws FailedConversion {
         if (!ticketEntity.getChecked()){
             Stream<RaffleNumbers> raffleNumbers = ticketEntity.getRaffleEntities().stream()
-
-                    //.map(RaffleNumberEntity::getNumbers)
-                    // .map(RaffleNumbers::new);
                     .map(raffleNumberEntity -> raffleNumberEntity.getNumbers())
                     .map(num -> new RaffleNumbers(num));
-
-
-
 
             List<Outcome> outcomes = raffleNumbers.map(raffleNumber -> outcomeGenerator.create(raffleNumber))
                     .collect(Collectors.toList());
