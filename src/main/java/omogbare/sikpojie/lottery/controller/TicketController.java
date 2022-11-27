@@ -12,6 +12,7 @@ import omogbare.sikpojie.lottery.response.TicketResponse;
 import omogbare.sikpojie.lottery.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,7 +43,7 @@ public class TicketController {
                 ticket.getCreatedAt().getValue(),
                 ticket.getModifiedAt().getValue(),
                 ticket.getLines()
-                );
+        );
         return ticketResponse;
 
     }
@@ -72,7 +73,7 @@ public class TicketController {
 
     @PutMapping("/ticket/{id}")
     public TicketResponse ammendLines(@PathVariable Long id,
-                                           @RequestBody TicketRequest ticketRequest) throws InvalidTicketType, ItemNotFound {
+                                      @RequestBody TicketRequest ticketRequest) throws InvalidTicketType, ItemNotFound {
 
 
         Ticket ticket = ticketService.ammendLines(id, ticketRequest);
@@ -82,33 +83,11 @@ public class TicketController {
                 ticket.getModifiedAt().getValue(),
                 ticket.getLines()
         );
-
-
-//        Optional<TicketEntity> ticketEntity = ticketRepository.findById(id);
-//
-//        TicketEntity entity = ticketEntity.orElseThrow(IllegalArgumentException::new);
-//
-//        Ticket ticket = ticketEntityToTicketObjectConverter.convert(entity);
-//
-//
-//        if( ticket instanceof OpenTicket){
-//            ticketService.ammendLines((OpenTicket) ticket, ticketRequest);
-//
-//        }
-//
-//        return new TicketResponse(
-//                ticket.getId().getValue(),
-//                ticket.getCreatedAt().getValue(),
-//                ticket.getModifiedAt().getValue(),
-//                ticket.getLines()
-//        );
     }
 
     @PutMapping("/status/{id}")
     public RetrieveStatusResponse retrieveTicketStatus(@PathVariable Long id) throws ItemNotFound {
 
         return ticketService.retrieveTicketStatus(id);
-    };
-
-
+    }
 }

@@ -18,9 +18,7 @@ public interface TicketService {
 
     Ticket getTicketById(Long id) throws ItemNotFound; // GET ONE TICKET
 
-//    Ticket ammendLines(OpenTicket ticket, TicketRequest request);
-
-  Ticket ammendLines(Long id, TicketRequest ticketRequest) throws InvalidTicketType, ItemNotFound; // PUT - EDIT TICKET LINES
+    Ticket ammendLines(Long id, TicketRequest ticketRequest) throws InvalidTicketType, ItemNotFound; // PUT - EDIT TICKET LINES
 
     RetrieveStatusResponse retrieveTicketStatus(Long id) throws ItemNotFound; // PUT - RETRIEVE TICKET STATUS
 
