@@ -32,18 +32,14 @@ public class DefaultTicketService implements TicketService {
 
     TicketEntityToTicketObjectConverter ticketEntityToTicketObjectConverter;
 
-    OutcomeGenerator outcomeGenerator;
-
     public DefaultTicketService(@Autowired TicketRepository ticketRepository,
                                 @Autowired RaffleNumbersGenerator raffleNumbersGenerator,
                                 @Autowired RaffleNumberRepository raffleNumberRepository,
-                                @Autowired TicketEntityToTicketObjectConverter ticketEntityToTicketObjectConverter,
-                                @Autowired OutcomeGenerator outcomeGenerator) {
+                                @Autowired TicketEntityToTicketObjectConverter ticketEntityToTicketObjectConverter) {
         this.ticketRepository = ticketRepository;
         this.raffleNumbersGenerator = raffleNumbersGenerator;
         this.raffleNumberRepository = raffleNumberRepository;
         this.ticketEntityToTicketObjectConverter = ticketEntityToTicketObjectConverter;
-        this.outcomeGenerator = outcomeGenerator;
     }
 
     @Override

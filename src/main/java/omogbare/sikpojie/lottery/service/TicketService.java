@@ -2,7 +2,6 @@ package omogbare.sikpojie.lottery.service;
 
 import omogbare.sikpojie.lottery.domain.tickets.OpenTicket;
 import omogbare.sikpojie.lottery.domain.tickets.Ticket;
-import omogbare.sikpojie.lottery.entity.TicketEntity;
 import omogbare.sikpojie.lottery.exceptions.FailedConversion;
 import omogbare.sikpojie.lottery.exceptions.InvalidTicketType;
 import omogbare.sikpojie.lottery.exceptions.ItemNotFound;

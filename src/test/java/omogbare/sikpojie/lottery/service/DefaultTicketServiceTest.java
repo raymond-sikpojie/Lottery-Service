@@ -34,14 +34,11 @@ class DefaultTicketServiceTest {
 
     RaffleNumberRepository raffleNumberRepositoryMock = mock(RaffleNumberRepository.class);
 
-    OutcomeGenerator outcomeGeneratorMock = mock(OutcomeGenerator.class);
-
     DefaultTicketService defaultTicketService = new DefaultTicketService(
             ticketRepositoryMock,
             raffleNumbersGeneratorMock,
             raffleNumberRepositoryMock,
-            ticketEntityConverterMock,
-            outcomeGeneratorMock
+            ticketEntityConverterMock
     );
 
     @BeforeEach
@@ -66,4 +63,15 @@ class DefaultTicketServiceTest {
         verify(raffleNumberRepositoryMock, times(1)).saveAll(any());
     }
 
+    @DisplayName("Test to know if RaffleNumberGenerator is called")
+    @Test
+    public void testCallToRaffleNumberGenerator() throws FailedConversion {
+        verify(raffleNumbersGeneratorMock, times(1)).create();
+    }
+
+    @DisplayName("Test to know if TicketEntityConverter is called")
+    @Test
+    public void testCallToTicketEntityConverterMock() throws FailedConversion {
+        verify(ticketRepositoryMock, times(1)).save(any());
+    }
 }

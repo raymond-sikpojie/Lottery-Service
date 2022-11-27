@@ -33,7 +33,7 @@ class RaffleNumbersGeneratorTest {
 //
 //    }
 
-    @DisplayName("Raffle Facotry generates three numbers")
+    @DisplayName("Raffle Factory generates three numbers")
     @Test
     public void testFactoryCreatesThreeNumbers() {
         RaffleNumbers raffleNumbers = raffleNumberGenerator.create();

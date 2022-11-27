@@ -7,12 +7,6 @@ import omogbare.sikpojie.lottery.value.Id;
 import omogbare.sikpojie.lottery.value.ModifiedAt;
 import omogbare.sikpojie.lottery.value.Outcome;
 
-import java.util.List;
-
-/**
- * It's not mutable because @Value annotation does not have getters and setters
- */
-
 @Value
 @EqualsAndHashCode(callSuper = true)
 public class ClosedTicket extends Ticket {

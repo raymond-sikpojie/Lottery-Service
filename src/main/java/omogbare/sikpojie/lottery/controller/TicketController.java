@@ -20,15 +20,19 @@ import java.util.stream.Collectors;
 @RequestMapping("/v1")
 public class TicketController {
 
-    @Autowired
     private TicketService ticketService;
 
-    @Autowired
     TicketRepository ticketRepository;
 
-    @Autowired
     TicketEntityToTicketObjectConverter ticketEntityToTicketObjectConverter;
 
+    public TicketController(@Autowired TicketService ticketService,
+                            @Autowired TicketRepository ticketRepository,
+                            @Autowired TicketEntityToTicketObjectConverter ticketEntityToTicketObjectConverter) {
+        this.ticketService = ticketService;
+        this.ticketRepository = ticketRepository;
+        this.ticketEntityToTicketObjectConverter = ticketEntityToTicketObjectConverter;
+    }
 
     @PostMapping("/ticket")
     public TicketResponse createTicket(@Valid @RequestBody TicketRequest ticketRequest) throws FailedConversion {

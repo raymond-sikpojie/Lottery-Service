@@ -9,10 +9,6 @@ import omogbare.sikpojie.lottery.value.Outcome;
 
 import java.util.List;
 
-/**
- * An open ticket is mutable. @Data creates all getters and setters
- * */
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
