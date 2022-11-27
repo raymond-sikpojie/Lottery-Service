@@ -92,8 +92,13 @@ public class DefaultTicketService implements TicketService {
 
     @Override
     public Ticket getTicketById(Long id) {
-        TicketEntity ticketEntity = ticketRepository.findById(id).get();
-        return ticketEntityToTicketObjectConverter.convert(ticketEntity);
+//        TicketEntity ticketEntity = ticketRepository.findById(id).get();
+        Optional<TicketEntity> ticketEntity = ticketRepository.findById(id);
+
+        TicketEntity entity = ticketEntity.orElseThrow(IllegalArgumentException::new);
+
+        Ticket ticket = ticketEntityToTicketObjectConverter.convert(entity);
+        return ticketEntityToTicketObjectConverter.convert(entity);
     }
 
 
@@ -168,8 +173,8 @@ public class DefaultTicketService implements TicketService {
 
         TicketEntity entity = ticketEntity.orElseThrow(IllegalArgumentException::new);
 
+        Boolean initialCheckedValue = entity.getChecked();
         if(entity.getChecked() == false) {
-            Boolean initialCheckedValue = entity.getChecked();
             entity.setChecked(true);
             ticketRepository.save(entity);
             Ticket closedTicket = ticketEntityToTicketObjectConverter.convert(entity);
@@ -178,6 +183,8 @@ public class DefaultTicketService implements TicketService {
 
         } else {
             return "This ticked is closed, with a checked value of : " + entity.getChecked();
+
         }
+
     }
 }

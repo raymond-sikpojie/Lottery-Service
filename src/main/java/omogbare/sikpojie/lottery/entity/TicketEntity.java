@@ -20,13 +20,11 @@ public class TicketEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-//    @Basic
     private Boolean checked;
 
     @OneToMany(
-            mappedBy = "ticketEntity",
-            fetch = FetchType.EAGER
+            mappedBy = "ticketEntity"
+//            fetch = FetchType.EAGER
     )
     private List<RaffleNumberEntity> raffleEntities;
 
