@@ -21,54 +21,36 @@ import java.util.stream.Collectors;
 @RequestMapping("/v1")
 public class TicketController {
 
+    @Autowired
+    CreateTicketResponseHelper ticketResponseHelper;
+
+    @Autowired
     private TicketService ticketService;
 
+    @Autowired
     TicketRepository ticketRepository;
 
+    @Autowired
     TicketEntityToTicketObjectConverter ticketEntityToTicketObjectConverter;
-
-    public TicketController(@Autowired TicketService ticketService,
-                            @Autowired TicketRepository ticketRepository,
-                            @Autowired TicketEntityToTicketObjectConverter ticketEntityToTicketObjectConverter) {
-        this.ticketService = ticketService;
-        this.ticketRepository = ticketRepository;
-        this.ticketEntityToTicketObjectConverter = ticketEntityToTicketObjectConverter;
-    }
 
     @PostMapping("/ticket")
     public TicketResponse createTicket(@Valid @RequestBody TicketRequest ticketRequest) throws FailedConversion {
         Ticket ticket = ticketService.createTicket(ticketRequest);
-        TicketResponse ticketResponse = new TicketResponse(
-                ticket.getId().getValue(),
-                ticket.getCreatedAt().getValue(),
-                ticket.getModifiedAt().getValue(),
-                ticket.getLines()
-        );
-        return ticketResponse;
+       return ticketResponseHelper.create(ticket);
 
     }
 
     @GetMapping("/ticket")
     public List<TicketResponse> getAllTickets() {
         List<Ticket> tickets = ticketService.getAllTickets();
-        return tickets.stream().map(ticket -> new TicketResponse(
-                ticket.getId().getValue(),
-                ticket.getCreatedAt().getValue(),
-                ticket.getModifiedAt().getValue(),
-                ticket.getLines()
-        )).collect(Collectors.toList());
+        return tickets.stream().map(ticket -> ticketResponseHelper.create(ticket)).collect(Collectors.toList());
     }
 
     @GetMapping("/ticket/{id}")
     public TicketResponse getTicketById(@PathVariable Long id) throws ItemNotFound {
         Ticket ticket = ticketService.getTicketById(id);
 
-        return new TicketResponse(
-                ticket.getId().getValue(),
-                ticket.getCreatedAt().getValue(),
-                ticket.getModifiedAt().getValue(),
-                ticket.getLines()
-        );
+        return ticketResponseHelper.create(ticket);
     }
 
     @PutMapping("/ticket/{id}")
@@ -77,12 +59,7 @@ public class TicketController {
 
 
         Ticket ticket = ticketService.ammendLines(id, ticketRequest);
-        return new TicketResponse(
-                ticket.getId().getValue(),
-                ticket.getCreatedAt().getValue(),
-                ticket.getModifiedAt().getValue(),
-                ticket.getLines()
-        );
+        return ticketResponseHelper.create(ticket);
     }
 
     @PutMapping("/status/{id}")

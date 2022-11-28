@@ -3,15 +3,12 @@ package omogbare.sikpojie.lottery.service;
 import omogbare.sikpojie.lottery.converter.TicketEntityToTicketObjectConverter;
 import omogbare.sikpojie.lottery.domain.raffle.RaffleNumbersGenerator;
 import omogbare.sikpojie.lottery.exceptions.FailedConversion;
-import omogbare.sikpojie.lottery.lottery.OutcomeGenerator;
 import omogbare.sikpojie.lottery.repository.RaffleNumberRepository;
 import omogbare.sikpojie.lottery.repository.TicketRepository;
 import omogbare.sikpojie.lottery.request.TicketRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-
 import static omogbare.sikpojie.lottery.helpers.EntityFactory.createRaffleNumber;
 import static omogbare.sikpojie.lottery.helpers.EntityFactory.openTicket;
 import static omogbare.sikpojie.lottery.helpers.EntityFactory.ticketEntity;
@@ -57,7 +54,7 @@ class DefaultTicketServiceTest {
         verify(ticketEntityConverterMock, times(1)).convertToOpenTicket(any());
     }
 
-    @DisplayName("Test to know if TicketEntityToDomainTicketObjectConverter")
+    @DisplayName("Test to know if RaffleNumberRepository is called")
     @Test
     public void testCallToRaffleNumberRepository() throws FailedConversion {
         verify(raffleNumberRepositoryMock, times(1)).saveAll(any());

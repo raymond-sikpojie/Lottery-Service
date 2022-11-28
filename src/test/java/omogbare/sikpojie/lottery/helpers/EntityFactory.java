@@ -30,7 +30,7 @@ public class EntityFactory {
         ticketEntity.setId(1L);
         ticketEntity.setCreated(Instant.ofEpochMilli(1669384874L));
         ticketEntity.setModified(Instant.ofEpochMilli(1669384874L));
-        ticketEntity.setStatus(false);
+        ticketEntity.setStatus("unchecked");
         return ticketEntity;
     }
 
