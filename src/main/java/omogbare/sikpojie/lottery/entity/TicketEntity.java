@@ -16,7 +16,7 @@ public class TicketEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Boolean checked;
+    private String status;
 
     @OneToMany(
             mappedBy = "ticketEntity",
@@ -33,7 +33,7 @@ public class TicketEntity implements Serializable {
     void preInsert(){
         created = Optional.ofNullable(created).orElseGet(Instant::now);
         modified = Optional.ofNullable(modified).orElseGet(Instant::now);
-        checked = Optional.ofNullable(checked).orElse(false);
+        status = Optional.ofNullable(status).orElse("unchecked");
     }
 
     @PreUpdate

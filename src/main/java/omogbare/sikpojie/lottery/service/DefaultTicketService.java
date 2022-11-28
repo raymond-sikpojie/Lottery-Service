@@ -118,16 +118,16 @@ public class DefaultTicketService implements TicketService {
 
         TicketEntity entity = ticketEntity.orElseThrow(() -> new ItemNotFound("The ticket does not exist"));
 
-        Boolean initialCheckedValue = entity.getChecked();
-        if(!entity.getChecked()) {
-            entity.setChecked(true);
+        String initialStatus = entity.getStatus();
+        if(entity.getStatus().equalsIgnoreCase("unchecked")) {
+            entity.setStatus("checked");
             ticketRepository.save(entity);
             Ticket closedTicket = ticketEntityToTicketObjectConverter.convert(entity);
             return new RetrieveStatusResponse(
-                    "The status of this ticket has been viewed and will now be closed", initialCheckedValue);
+                    "The status of this ticket has been viewed and will now be closed", initialStatus);
         } else {
             return new RetrieveStatusResponse(
-                    "This ticket is closed and cannot be ammended", entity.getChecked());
+                    "This ticket is closed and cannot be ammended", entity.getStatus());
         }
 
     }

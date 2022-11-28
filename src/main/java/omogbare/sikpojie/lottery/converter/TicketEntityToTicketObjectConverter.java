@@ -5,7 +5,6 @@ import omogbare.sikpojie.lottery.domain.raffle.RaffleNumbers;
 import omogbare.sikpojie.lottery.domain.tickets.ClosedTicket;
 import omogbare.sikpojie.lottery.domain.tickets.OpenTicket;
 import omogbare.sikpojie.lottery.domain.tickets.Ticket;
-import omogbare.sikpojie.lottery.entity.RaffleNumberEntity;
 import omogbare.sikpojie.lottery.entity.TicketEntity;
 import omogbare.sikpojie.lottery.exceptions.FailedConversion;
 import omogbare.sikpojie.lottery.lottery.OutcomeGenerator;
@@ -45,7 +44,7 @@ public class TicketEntityToTicketObjectConverter {
         CreatedAt createdAt = new CreatedAt(ticketEntity.getCreated());
         ModifiedAt modifiedAt = new ModifiedAt(ticketEntity.getModified());
 
-        if( ticketEntity.getChecked() ){
+        if( ticketEntity.getStatus().equalsIgnoreCase("checked") ){
             ImmutableList<Outcome> immutableOutcome = ImmutableList.copyOf(outcomes);
             return new ClosedTicket(id, createdAt, modifiedAt, immutableOutcome);
         } else{
@@ -54,7 +53,7 @@ public class TicketEntityToTicketObjectConverter {
     }
 
     public OpenTicket convertToOpenTicket(TicketEntity ticketEntity) throws FailedConversion {
-        if (!ticketEntity.getChecked()){
+        if (ticketEntity.getStatus().equalsIgnoreCase("unchecked")){
             Stream<RaffleNumbers> raffleNumbers = ticketEntity.getRaffleEntities().stream()
                     .map(raffleNumberEntity -> raffleNumberEntity.getNumbers())
                     .map(num -> new RaffleNumbers(num));

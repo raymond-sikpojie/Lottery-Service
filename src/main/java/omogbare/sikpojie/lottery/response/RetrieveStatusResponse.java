@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RetrieveStatusResponse {
     String message;
-    Boolean checked;
+    String status;
 };
 
 
