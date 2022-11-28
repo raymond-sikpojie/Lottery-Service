@@ -28,10 +28,6 @@ public class TicketEntityToTicketObjectConverter {
         this.outcomeGenerator = outcomeGenerator;
     }
 
-    /**
-     *This takes in a ticket entity and determines what type of ticket it returns. An open or closed ticket.
-     */
-
     public Ticket convert(TicketEntity ticketEntity){
         List<Outcome> outcomes = ticketEntity.getRaffleEntities().stream()
                 .map(raffleNumberEntity -> raffleNumberEntity.getNumbers())
