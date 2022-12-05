@@ -74,8 +74,4 @@ class OutcomeGeneratorTest {
         );
     }
 
-
-
-
-
 }

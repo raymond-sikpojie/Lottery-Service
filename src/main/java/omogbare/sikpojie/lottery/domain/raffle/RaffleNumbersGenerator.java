@@ -12,12 +12,10 @@ public class RaffleNumbersGenerator {
     public RaffleNumbers create(){
         Random random = new Random();
         int upperbound = 3;
-
         List<Integer> numbers = new ArrayList<>();
         for(int i=0; i<upperbound; i++) {
            numbers.add(random.nextInt(upperbound));
         }
-
 
         return new RaffleNumbers(numbers);
     }

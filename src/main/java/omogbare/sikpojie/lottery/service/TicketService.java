@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface TicketService {
 
-    OpenTicket createTicket(TicketRequest ticketRequest) throws FailedConversion; // POST TICKET
+    Ticket createTicket(TicketRequest ticketRequest) throws FailedConversion; // POST TICKET
 
     List<Ticket> getAllTickets(); // GET ALL TICKETS
 

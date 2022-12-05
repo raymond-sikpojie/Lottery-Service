@@ -41,10 +41,9 @@ public class DefaultTicketService implements TicketService {
     }
 
     @Override
-    public OpenTicket createTicket(TicketRequest ticketRequest) throws FailedConversion {
+    public Ticket createTicket(TicketRequest ticketRequest) throws FailedConversion {
 
-        TicketEntity ticketEntity = new TicketEntity();
-        ticketRepository.save(ticketEntity);
+        TicketEntity ticketEntity = ticketRepository.save(new TicketEntity());
 
         int numberOfRaffleToCreate = ticketRequest.getNumberOfLines();
 
@@ -61,7 +60,7 @@ public class DefaultTicketService implements TicketService {
 
         ticketEntity.setRaffleEntities(entities);
 
-        return ticketEntityToTicketObjectConverter.convertToOpenTicket(ticketEntity);
+        return ticketEntityToTicketObjectConverter.convert(ticketEntity);
     }
 
 

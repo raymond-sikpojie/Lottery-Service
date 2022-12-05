@@ -18,6 +18,11 @@ public class EntityFactory {
                         new CreatedAt(Instant.ofEpochMilli(1669384874L)),
                         new ModifiedAt(Instant.ofEpochMilli(1669384874L)),
                         Arrays.asList(
+                                new RaffleNumbers(Arrays.asList(2, 1, 1)),
+                                new RaffleNumbers(Arrays.asList(1, 0, 1)),
+                                new RaffleNumbers(Arrays.asList(1, 2, 3))
+                        ),
+                        Arrays.asList(
                                 new Outcome(1),
                                 new Outcome(10),
                                 new Outcome(11)

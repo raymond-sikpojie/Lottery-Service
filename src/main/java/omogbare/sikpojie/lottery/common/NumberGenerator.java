@@ -4,6 +4,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
+/**
+ * Not being utilized
+ */
 @Component
 public class NumberGenerator {
     public int generate(){

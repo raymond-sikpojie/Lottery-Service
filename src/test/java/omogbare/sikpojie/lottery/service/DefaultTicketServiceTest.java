@@ -44,14 +44,14 @@ class DefaultTicketServiceTest {
         when(raffleNumbersGeneratorMock.create()).thenReturn(createRaffleNumber());
         TicketRequest ticketRequest = new TicketRequest();
         ticketRequest.setNumberOfLines(1);
-        when(ticketEntityConverterMock.convertToOpenTicket(any())).thenReturn(openTicket);
+        when(ticketEntityConverterMock.convert(any())).thenReturn(openTicket);
         defaultTicketService.createTicket(ticketRequest);
     }
 
     @DisplayName("Test to know if TicketEntityToDomainTicketObjectConverter")
     @Test
     public void testCallToConvertToOpenTicket() throws FailedConversion {
-        verify(ticketEntityConverterMock, times(1)).convertToOpenTicket(any());
+        verify(ticketEntityConverterMock, times(1)).convert(any());
     }
 
     @DisplayName("Test to know if RaffleNumberRepository is called")
